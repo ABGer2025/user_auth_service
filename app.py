@@ -1,6 +1,6 @@
 import os
 import uuid
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify # type: ignore
 from data_manager import data_manager
 
 USERS_FILE = os.path.join(os.path.dirname(__file__), 'data', 'users.json')
@@ -28,6 +28,21 @@ def register():
     data_manager.write_data(USERS_FILE, users)
 
     return jsonify({'message': 'User registered successfully', 'id': user_id}), 201
+
+
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    if not data or 'username' not in data or 'password' not in data:
+        return jsonify({'error': 'Username and password required'}), 400
+
+    users = data_manager.read_data(USERS_FILE)
+    user = next((user for user in users if user.get('username') == data['username']), None)
+    if not user or user.get('password') != data['password']:
+        return jsonify({'error': 'Invalid username or password'}), 401
+
+    return jsonify({'message': 'Login successful', 'id': user['id']}), 200
+
 
 if __name__ == "__main__":
     app.run(port=5001, debug=True)
