@@ -4,5 +4,10 @@
         "username": "alice",
         "email": "alice@example.com",
         "password": "hashed_password"
+    },
+    {
+        "id": "60b85aa7-35e6-4121-b753-6e51d956374a",
+        "username": "max123",
+        "password": "geheim123"
     }
 ]
