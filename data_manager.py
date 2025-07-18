@@ -29,5 +29,4 @@ class JsonDataManager:
             return False
 
 # Instanz für die Verwendung in app.py
-data_manager = JsonDataManager()
-  
+data_manager = JsonDataManager()  
