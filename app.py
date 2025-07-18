@@ -19,23 +19,24 @@ def register():
     data = request.get_json()
     username = data.get('username')
     password = data.get('password')
-    email = data.get('email')
 
-    if not username or not password or not email:
-        return jsonify({'error': 'Username, password and email required'}), 400
-
-    if email in users:
-       return jsonify({'error': 'Email already exists'}), 409
+    if not username or not password:
+        return jsonify({'error': 'Username and password required'}), 400
     
     if username in users:
         return jsonify({'error': 'User already exists'}), 409
     
-    users[username] = {'password': password}
+    user_id = str(uuid.uuid4())
+    users[username] = {
+        'id': user_id,
+        'password': password
+        
     data_manager.write_data(USERS_FILE, users)
 
-    return jsonify({'message': 'User registered successfully'}), 201
-
-new_user_id = str(uuid.uuid4())
+    return jsonify({
+        'message': 'User registered successfully',
+        'id': user_id
+    }), 201
 
 
 if __name__ == "__main__":
