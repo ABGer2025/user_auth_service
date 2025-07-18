@@ -1,4 +1,5 @@
 import os
+import uuid
 from flask import Flask, request, jsonify
 from data_manager import data_manager
 
@@ -33,6 +34,8 @@ def register():
     data_manager.write_data(USERS_FILE, users)
 
     return jsonify({'message': 'User registered successfully'}), 201
+
+new_user_id = str(uuid.uuid4())
 
 
 if __name__ == "__main__":
