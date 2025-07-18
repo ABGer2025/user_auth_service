@@ -30,6 +30,7 @@ def register():
     users[username] = {
         'id': user_id,
         'password': password
+    }
         
     data_manager.write_data(USERS_FILE, users)
 
